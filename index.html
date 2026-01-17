@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知財裁判例データベース</title>
+    <meta name="description" content="知財高裁の裁判例を検索・閲覧できるデータベースアプリ">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // 認証チェック
+        (function () {
+            const VALID_HASH = "5565b0e7ff4635f787f769061489a9a6f417a37520bc60f0d9752f7dbed48147";
+            const authToken = sessionStorage.getItem('hanrei_auth');
+            if (authToken !== VALID_HASH) {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">⚖️</span>
+                    <h1>知財裁判例データベース</h1>
+                </div>
+                <div class="header-stats">
+                    <span id="total-count" class="stat-badge">読み込み中...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="キーワードで検索（発明名称、事件番号、当事者名など）" autocomplete="off">
+                    <button id="search-btn" class="search-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="filter-kenri">権利種別</label>
+                        <select id="filter-kenri">
+                            <option value="">すべて</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-jiken">事件種別</label>
+                        <select id="filter-jiken">
+                            <option value="">すべて</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-kekka">判決結果</label>
+                        <select id="filter-kekka">
+                            <option value="">すべて</option>
+                        </select>
+                    </div>
+                    <button id="clear-filters" class="clear-btn">クリア</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <main class="results-section">
+            <div class="results-header">
+                <span id="results-count">検索結果: 0件</span>
+                <div class="sort-options">
+                    <label for="sort-select">並び替え:</label>
+                    <select id="sort-select">
+                        <option value="date-desc">裁判日（新しい順）</option>
+                        <option value="date-asc">裁判日（古い順）</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="results-container" class="results-container">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>データを読み込んでいます...</p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination" class="pagination"></div>
+        </main>
+
+        <!-- Detail Modal -->
+        <div id="detail-modal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close" id="modal-close">&times;</button>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

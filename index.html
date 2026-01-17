@@ -10,6 +10,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script>
+        (function () {
+            const VALID_HASH = "5565b0e7ff4635f787f769061489a9a6f417a37520bc60f0d9752f7dbed48147";
+            if (sessionStorage.getItem('hanrei_auth') !== VALID_HASH) {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
 </head>
 
 <body>
